@@ -32,4 +32,12 @@ paths:
               example:
                 message: Internal server error occurred
 
-    
+components:
+  securitySchemes:
+    jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - jwt: []
