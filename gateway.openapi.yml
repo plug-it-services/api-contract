@@ -1,0 +1,25 @@
+openapi: '3.0.2'
+info:
+  title: Plug-it API
+  version: '1.0.0'
+servers:
+  - url: https://api.dev.area.alexandrejublot.com/v1.0
+    description: Dev environement
+  - url: https://api.area.alexandrejublot.com/v1.0
+    description: Prod environement
+paths:
+  /service:
+    get:
+      summary: List services
+      description: Get the list of all the available services (connected or not)
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Invalid token or token not found
+          content:
+            application/json:
+              schema:
+                $ref: './types/ErrorResponse.openapi.yml'
+
+    
