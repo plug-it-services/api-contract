@@ -21,5 +21,15 @@ paths:
             application/json:
               schema:
                 $ref: './types/ErrorResponse.openapi.yml'
+              example:
+                message: Invalid token provided
+        '500':
+          description: Invalid token or token not found
+          content:
+            application/json:
+              schema:
+                $ref: './types/ErrorResponse.openapi.yml'
+              example:
+                message: Internal server error occurred
 
     
