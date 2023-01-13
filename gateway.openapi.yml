@@ -3,10 +3,11 @@ info:
   title: Plug-it API
   version: '1.0.0'
 servers:
-  - url: https://api.dev.area.alexandrejublot.com/v1.0
+  - url: https://api.dev.area.alexandrejublot.com/api/v1.0
     description: Dev environement
-  - url: https://api.area.alexandrejublot.com/v1.0
+  - url: https://api.area.alexandrejublot.com/api/v1.0
     description: Prod environement
+
 paths:
   /service:
     get:
@@ -16,28 +17,75 @@ paths:
         '200':
           description: OK
         '401':
-          description: Invalid token or token not found
-          content:
-            application/json:
-              schema:
-                $ref: './types/ErrorResponse.openapi.yml'
-              example:
-                message: Invalid token provided
+          $ref: '#/components/responses/Unauthorized'
         '500':
-          description: Invalid token or token not found
-          content:
-            application/json:
-              schema:
-                $ref: './types/ErrorResponse.openapi.yml'
-              example:
-                message: Internal server error occurred
+          $ref: '#/components/responses/InternalError'
+
+  /service/{serviceName}:
+    get:
+      summary: Start the oauth2 process for the requested serviceName
+      description: Url to load with the browser to start the oauth2 process. This endpoint will redirect you to the access provider for login
+      parameters:
+        - in: path
+          name: serviceName
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '302':
+          description: Redirect to service provider login page
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /service/{serviceName}/callback:
+    get:
+      summary: Oauth2 callback for the requested serviceName
+      description: Retrieve access token and redirect to front page
+      security:
+        - jwt: []
+      responses:
+        '302':
+          description: Redirect to front end services page
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
 
 components:
+  responses:
+    Unauthorized:
+      description: Invalid JWT token or JWT token not found
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Invalid JWT token provided
+    
+    InternalError:
+      description: Invalid token or token not found
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Internal server error occurred
+
+
   securitySchemes:
     jwt:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+      type: apiKey
+      in: cookie
+      name: access_token
+    sessionToken:
+      type: apiKey
+      in: header
+      name: crsf_token
 
 security:
   - jwt: []
+  - sessionToken: []
