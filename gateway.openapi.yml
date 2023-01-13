@@ -1,0 +1,261 @@
+openapi: '3.0.2'
+info:
+  title: Plug-it API
+  version: '1.0.0'
+servers:
+  - url: https://api.dev.area.alexandrejublot.com/api/v1.0
+    description: Dev environement
+  - url: https://api.area.alexandrejublot.com/api/v1.0
+    description: Prod environement
+
+paths:
+  /service:
+    get:
+      summary: List services
+      description: Get the list of all the available services (connected or not)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: './types/services/ServicesList.openapi.yml'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /service/{serviceName}/oauth2:
+    get:
+      summary: Start the oauth2 process for the requested serviceName
+      description: Url to load with the browser to start the oauth2 process. This endpoint will redirect you to the access provider for login
+      parameters:
+        - in: path
+          name: serviceName
+          required: true
+          schema:
+            type: string
+      responses:
+        '302':
+          description: Redirect to service provider login page
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /service/{serviceName}/callback:
+    get:
+      summary: Oauth2 callback for the requested serviceName
+      description: Retrieve access token and redirect to front page
+      security:
+        - jwt: []
+      parameters:
+        - in: path
+          name: serviceName
+          required: true
+          schema:
+            type: string
+      responses:
+        '302':
+          description: Redirect to front end services page
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /service/{serviceName}/disconnect:
+    post:
+      summary: Disconnect the service provider of the app
+      description: Revoke the access and refresh tokens to service provider
+      parameters:
+        - in: path
+          name: serviceName
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfull disconnection of the service
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /service/{serviceName}/events:
+    get:
+      summary: Get all the events the service handles
+      description: Returns all the supported events with their descriptions
+      parameters:
+        - in: path
+          name: serviceName
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: An array of all the events
+          content:
+            application/json:
+              schema:
+                $ref: './types/services/EventsList.openapi.yml'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /service/{serviceName}/actions:
+    get:
+      summary: Get all the actions the service handles
+      description: Returns all the supported actions with their descriptions
+      parameters:
+        - in: path
+          name: serviceName
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: An array of all the actions
+          content:
+            application/json:
+              schema:
+                $ref: './types/services/ActionsList.openapi.yml'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /service/{serviceName}/apiKey:
+    post:
+      summary: Authenticate to the service provider with api key credential
+      description: Retrieve the provided api key and test it against the service provider before storing it
+      requestBody:
+        content:  
+          application/json:
+            schema:
+              type: object
+              properties:
+                apiKey: 
+                  type: string
+      responses:
+        '200': 
+          description: Successfull authentication
+        '400':
+          description: Bad request or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: './types/ErrorResponse.openapi.yml'
+              example:
+                message: "Invalid credentials: cannot connect to Spotify service"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /service/{serviceName}/clientSecrets:
+    post:
+      summary: Authenticate to the service provider with client id and client secret credentials
+      description: Retrieve the provided secrets and test them against the service provider before storing them
+      requestBody:
+        content:  
+          application/json:
+            schema:
+              type: object
+              properties:
+                clientId: 
+                  type: string
+                clientSecret:
+                  type: string
+      responses:
+        '200': 
+          description: Successfull authentication
+        '400':
+          description: Bad request or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: './types/ErrorResponse.openapi.yml'
+              example:
+                message: "Invalid credentials: cannot connect to Spotify service"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+
+
+  
+
+components:
+  responses:
+    Unauthorized:
+      description: Invalid JWT token or JWT token not found
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Invalid JWT token provided
+
+    Forbidden:
+      description: Forbidden action with your actual permissions
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Cannot delete ressources that you don't own
+    
+    InternalError:
+      description: Invalid token or token not found
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Internal server error occurred
+
+    NotFound:
+      description: Ressource not found
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Service not found
+
+
+  securitySchemes:
+    jwt:
+      type: apiKey
+      in: cookie
+      name: access_token
+    sessionToken:
+      type: apiKey
+      in: header
+      name: crsf_token
+
+security:
+  - jwt: []
+  - sessionToken: []
