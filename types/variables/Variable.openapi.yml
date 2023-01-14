@@ -1,0 +1,10 @@
+type: object
+properties:
+  key:
+    $ref: './VariableKey.openapi.yml'
+  displayName: 
+    type: string
+    example: Start date
+  description:
+    type: string
+    example: The starting date of the meeting
