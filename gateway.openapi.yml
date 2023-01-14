@@ -231,7 +231,112 @@ paths:
           $ref: '#/components/responses/InternalError'
 
   
+  /plugs:
+    get:
+      summary: Get all the plugs a user has defined with preview data
+      description: Return all the plugs with their titles, events and reactions logos
+      responses:
+        '200':
+          description: List of all plugs
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    
+    post:
+      summary: Create a new plug
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './types/plugs/PlugCreation.openapi.yml'
+      responses:
+        '200':
+          description: Plug created
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
   
+  /plugs/{plugId}:
+    get:
+      summary: Get the details of a plug
+      description: Return all the structure of the plug (event, reactions...)
+      responses:
+        '200':
+          description: List of all plugs
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    
+    delete:
+      summary: Delete a plug
+      description: Delete a plug and fail current execution if there is one
+      responses:
+        '200':
+          description: Successfull deletion
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    
+    put:
+      summary: Edit a plug
+      description: Change title, event or reaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './types/plugs/PlugEdit.openapi.yml'
+      responses:
+        '200':
+          description: Successfull update
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  
+  /plugs/{plugId}/status:
+    put:
+      summary: Enable or disable a plug
+      description: Change the status of a plug
+      parameters:
+        - in: query
+          name: enabled
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successfull enable/disable
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
   
 
 
@@ -246,6 +351,15 @@ components:
             $ref: './types/ErrorResponse.openapi.yml'
           example:
             message: Invalid JWT token provided
+
+    InvalidRequest:
+      description: Invalid body/parameters for the request
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Missing required field XXXXX 
 
     Forbidden:
       description: Forbidden action with your actual permissions
