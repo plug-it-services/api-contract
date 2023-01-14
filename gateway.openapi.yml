@@ -339,6 +339,78 @@ paths:
 
   
 
+  /auth/signUp:
+    post:
+      summary: Sign up with basic auth form
+      description: Sign up with basic email and password combo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './types/auth/SignUp.openapi.yml'
+            example:
+              firstName: titi
+              lastName: toto
+              email: titi@toto.com
+              password: azerty1234
+      responses:
+        '200':
+          description: Successfull sign up, should login after
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  
+  /auth/login:
+    post:
+      summary: Login with basic auth form
+      description: Login with basic email and password combo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './types/auth/Login.openapi.yml'
+            example:
+              email: titi@toto.com
+              password: azerty1234
+      responses:
+        '200':
+          description: Successfull login
+          headers: 
+            Set-Cookie:
+              schema: 
+                type: string
+                example: access_token=abcde12345
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /auth/{serviceName}/login:
+    post:
+      summary: Login with SSO from a service
+      description: Login with SSO (google, facebook etc..)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './types/auth/SSOLogin.openapi.yml'
+      responses:
+        '200':
+          description: Successfull login
+          headers: 
+            Set-Cookie:
+              schema: 
+                type: string
+                example: access_token=abcde12345
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  
+
 
 
 components:
