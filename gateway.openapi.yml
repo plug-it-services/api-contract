@@ -159,6 +159,12 @@ paths:
       description: Retrieve the provided api key and test it against the service provider before storing it
       tags:
         - "Services"
+      parameters:
+        - in: path
+          name: serviceName
+          required: true
+          schema:
+            type: string
       requestBody:
         content:  
           application/json:
@@ -191,6 +197,12 @@ paths:
       description: Retrieve the provided secrets and test them against the service provider before storing them
       tags:
         - "Services"
+      parameters:
+        - in: path
+          name: serviceName
+          required: true
+          schema:
+            type: string
       requestBody:
         content:  
           application/json:
@@ -292,6 +304,12 @@ paths:
       description: Return all the structure of the plug (event, reactions...)
       tags:
         - "Plugs"
+      parameters:
+        - in: path
+          name: plugId
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: Plug description
@@ -313,6 +331,12 @@ paths:
       description: Delete a plug and fail current execution if there is one
       tags:
         - "Plugs"
+      parameters:
+        - in: path
+          name: plugId
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: Successfull deletion
@@ -330,6 +354,12 @@ paths:
       description: Change title, event or reaction
       tags:
         - "Plugs"
+      parameters:
+        - in: path
+          name: plugId
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -361,6 +391,11 @@ paths:
           name: enabled
           schema:
             type: boolean
+        - in: path
+          name: plugId
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: Successfull enable/disable
@@ -436,6 +471,12 @@ paths:
       description: Login with SSO (google, facebook etc..)
       tags:
         - "Authentication"
+      parameters:
+        - in: path
+          name: serviceName
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
