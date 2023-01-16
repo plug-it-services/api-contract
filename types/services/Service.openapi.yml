@@ -11,7 +11,7 @@ properties:
     type: string
     example: '/images/reddit_icon.png'
     description: URI to the icon image
-  triggers:
-    $ref: '../triggers/TriggersList.openapi.yml'
+  events:
+    $ref: '../events/EventsList.openapi.yml'
   actions:
     $ref: '../actions/ActionsList.openapi.yml'

@@ -1,0 +1,18 @@
+type: object
+properties:
+  name:
+    type: string
+    example: "Send email when received discord DM"
+  activated:
+    type: boolean
+  event:
+    type: object
+    properties:
+      serviceId:
+        $ref: '../services/ServiceId.openapi.yml'
+      eventId:
+        $ref: '../events/EventId.openapi.yml'
+  actions:
+    type: array
+    items:
+      $ref: '../fields/FieldSubmit.openapi.yml'

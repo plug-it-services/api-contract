@@ -1,0 +1,14 @@
+type: object
+properties:
+  firstName:
+    type: string
+    example: titi
+  lastName:
+    type: string
+    example: toto
+  email:
+    type: string
+    example: titi@toto.com
+  password:
+    type: string
+    example: password1234

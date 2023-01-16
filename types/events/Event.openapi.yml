@@ -1,7 +1,7 @@
 type: object
 properties:
   id:
-    $ref: './TriggerId.openapi.yml'
+    $ref: './EventId.openapi.yml'
   name:
     type: string
     example: Email is received

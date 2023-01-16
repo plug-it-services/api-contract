@@ -7,7 +7,7 @@ properties:
     example: "Send email when received discord DM"
   activated:
     type: boolean
-  trigger:
-    $ref: '../triggers/Trigger.openapi.yml'
+  event:
+    $ref: '../events/Event.openapi.yml'
   actions:
     $ref: '../actions/ActionsList.openapi.yml'
