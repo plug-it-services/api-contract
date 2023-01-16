@@ -1,0 +1,8 @@
+type: object
+properties:
+  email:
+    type: string
+    example: titi@toto.com
+  password:
+    type: string
+    example: password1234

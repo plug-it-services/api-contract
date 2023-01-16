@@ -1,5 +1,2 @@
-type: object
-properties:
-  id:
-    type: string
-    format: id
+type: string
+example: gdhrohsg46egbf7egg2fhj9

@@ -1,0 +1,15 @@
+type: object
+properties:
+  id:
+    $ref: './PlugId.openapi.yml'
+  name:
+    type: string
+    example: Send email when received discord DM
+  icons:
+    type: array
+    items:
+      schema:
+        type: string
+        example: '/images/icon_reddit.png'
+  activated:
+    type: boolean

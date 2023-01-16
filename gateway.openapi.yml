@@ -13,6 +13,8 @@ paths:
     get:
       summary: List services
       description: Get the list of all the available services (connected or not)
+      tags:
+        - "Services"
       responses:
         '200':
           description: OK
@@ -29,6 +31,8 @@ paths:
     get:
       summary: Start the oauth2 process for the requested serviceName
       description: Url to load with the browser to start the oauth2 process. This endpoint will redirect you to the access provider for login
+      tags:
+        - "Services"
       parameters:
         - in: path
           name: serviceName
@@ -51,6 +55,8 @@ paths:
       description: Retrieve access token and redirect to front page
       security:
         - jwt: []
+      tags:
+        - "Services"
       parameters:
         - in: path
           name: serviceName
@@ -71,6 +77,8 @@ paths:
     post:
       summary: Disconnect the service provider of the app
       description: Revoke the access and refresh tokens to service provider
+      tags:
+        - "Services"
       parameters:
         - in: path
           name: serviceName
@@ -93,6 +101,8 @@ paths:
     get:
       summary: Get all the events the service handles
       description: Returns all the supported events with their descriptions
+      tags:
+        - "Services"
       parameters:
         - in: path
           name: serviceName
@@ -105,7 +115,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './types/services/EventsList.openapi.yml'
+                $ref: './types/events/EventsList.openapi.yml'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -119,6 +129,8 @@ paths:
     get:
       summary: Get all the actions the service handles
       description: Returns all the supported actions with their descriptions
+      tags:
+        - "Services"
       parameters:
         - in: path
           name: serviceName
@@ -131,7 +143,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './types/services/ActionsList.openapi.yml'
+                $ref: './types/actions/ActionsList.openapi.yml'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -145,6 +157,8 @@ paths:
     post:
       summary: Authenticate to the service provider with api key credential
       description: Retrieve the provided api key and test it against the service provider before storing it
+      tags:
+        - "Services"
       requestBody:
         content:  
           application/json:
@@ -175,6 +189,8 @@ paths:
     post:
       summary: Authenticate to the service provider with client id and client secret credentials
       description: Retrieve the provided secrets and test them against the service provider before storing them
+      tags:
+        - "Services"
       requestBody:
         content:  
           application/json:
@@ -210,6 +226,8 @@ paths:
     post:
       summary: Execute the webhook with the specified id
       description: Pass the reuqest to the webhook handler of the specified service
+      tags:
+        - "Webhooks"
       parameters:
         - in: path
           name: serviceName
@@ -235,9 +253,15 @@ paths:
     get:
       summary: Get all the plugs a user has defined with preview data
       description: Return all the plugs with their titles, events and reactions logos
+      tags:
+        - "Plugs"
       responses:
         '200':
           description: List of all plugs
+          content:
+            application/json:
+              schema:
+                $ref: './types/plugs/PlugPreviewsList.openapi.yml'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
@@ -245,11 +269,13 @@ paths:
     
     post:
       summary: Create a new plug
+      tags:
+        - "Plugs"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: './types/plugs/PlugCreation.openapi.yml'
+              $ref: './types/plugs/PlugProps.openapi.yml'
       responses:
         '200':
           description: Plug created
@@ -264,9 +290,15 @@ paths:
     get:
       summary: Get the details of a plug
       description: Return all the structure of the plug (event, reactions...)
+      tags:
+        - "Plugs"
       responses:
         '200':
-          description: List of all plugs
+          description: Plug description
+          content:
+            application/json:
+              schema:
+                $ref: './types/plugs/Plug.openapi.yml'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -279,6 +311,8 @@ paths:
     delete:
       summary: Delete a plug
       description: Delete a plug and fail current execution if there is one
+      tags:
+        - "Plugs"
       responses:
         '200':
           description: Successfull deletion
@@ -294,11 +328,13 @@ paths:
     put:
       summary: Edit a plug
       description: Change title, event or reaction
+      tags:
+        - "Plugs"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: './types/plugs/PlugEdit.openapi.yml'
+              $ref: './types/plugs/PlugProps.openapi.yml'
       responses:
         '200':
           description: Successfull update
@@ -318,6 +354,8 @@ paths:
     put:
       summary: Enable or disable a plug
       description: Change the status of a plug
+      tags:
+        - "Plugs"
       parameters:
         - in: query
           name: enabled
@@ -343,6 +381,8 @@ paths:
     post:
       summary: Sign up with basic auth form
       description: Sign up with basic email and password combo
+      tags:
+        - "Authentication"
       requestBody:
         content:
           application/json:
@@ -365,6 +405,8 @@ paths:
     post:
       summary: Login with basic auth form
       description: Login with basic email and password combo
+      tags:
+        - "Authentication"
       requestBody:
         content:
           application/json:
@@ -392,6 +434,8 @@ paths:
     post:
       summary: Login with SSO from a service
       description: Login with SSO (google, facebook etc..)
+      tags:
+        - "Authentication"
       requestBody:
         content:
           application/json:
