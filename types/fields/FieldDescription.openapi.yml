@@ -1,0 +1,9 @@
+type: object
+properties:
+  type:
+    $ref: '../ElementType.openapi.yml'
+  key:
+    $ref: './FieldKey.openapi.yml'
+  displayName:
+    type: string
+    example: Mail recipient
