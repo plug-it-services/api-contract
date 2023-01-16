@@ -1,0 +1,13 @@
+type: object
+properties:
+  id:
+    $ref: './PlugId.openapi.yml'
+  name:
+    type: string
+    example: "Send email when received discord DM"
+  activated:
+    type: boolean
+  trigger:
+    $ref: '../triggers/Trigger.openapi.yml'
+  actions:
+    $ref: '../actions/ActionsList.openapi.yml'
