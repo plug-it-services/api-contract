@@ -2,6 +2,8 @@ type: object
 properties:
   key:
     $ref: './VariableKey.openapi.yml'
+  type:
+    $ref: '../ElementType.openapi.yml'
   displayName: 
     type: string
     example: Start date
