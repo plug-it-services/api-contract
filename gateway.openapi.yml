@@ -418,6 +418,8 @@ paths:
       description: Sign up with basic email and password combo
       tags:
         - "Authentication"
+      security: []
+      
       requestBody:
         content:
           application/json:
@@ -442,6 +444,8 @@ paths:
       description: Login with basic email and password combo
       tags:
         - "Authentication"
+      security: []
+      
       requestBody:
         content:
           application/json:
@@ -471,6 +475,7 @@ paths:
       description: Login with SSO (google, facebook etc..)
       tags:
         - "Authentication"
+      security: []
       parameters:
         - in: path
           name: serviceName
