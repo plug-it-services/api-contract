@@ -1,0 +1,77 @@
+openapi: '3.0.2'
+info:
+  title: Plugs Service
+  version: '1.0.0'
+
+paths:
+  /service/{serviceName}/initialize:
+    post:
+      summary: Register an starting up micro service
+      description: Assign an id to the service and save events and actions
+      parameters:
+        - in: path
+          name: serviceName
+          required: true
+          schema: 
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './types/services/InitializeRequest.openapi.yml'
+      responses:
+        '200':
+          description: Saved or updated service
+          content:
+            application/json:
+              schema:
+                $ref: './types/services/InitializeResponse.openapi.yml'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+components:
+  responses:
+    Unauthorized:
+      description: Invalid JWT token or JWT token not found
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Invalid JWT token provided
+
+    InvalidRequest:
+      description: Invalid body/parameters for the request
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Missing required field XXXXX 
+
+    Forbidden:
+      description: Forbidden action with your actual permissions
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Cannot delete ressources that you don't own
+    
+    InternalError:
+      description: Invalid token or token not found
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Internal server error occurred
+
+    NotFound:
+      description: Ressource not found
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Service not found
