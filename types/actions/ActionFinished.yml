@@ -1,0 +1,11 @@
+type: object
+properties:
+  serviceId:
+    type: string
+    example:  dhjh5jdtjdj8djg2j487j5g4j4
+  id:
+    $ref: './ActionId.openapi.yml'
+  variables:
+    type: array
+    items:
+      $ref: '../variables/VariableSubmit.yml'
