@@ -12,6 +12,10 @@ properties:
         $ref: '../services/ServiceId.openapi.yml'
       eventId:
         $ref: '../events/EventId.openapi.yml'
+      fields:
+        type: array
+        items:
+          $ref: '../fields/FieldsSubmit.openapi.yml'
   actions:
     type: array
     items:

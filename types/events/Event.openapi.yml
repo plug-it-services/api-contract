@@ -10,3 +10,5 @@ properties:
     example: Trigger when a mail is received
   variables:
     $ref: '../variables/VariablesList.openapi.yml'
+  fields:
+    $ref: '../FieldDescriptionList.openapi.yml'
