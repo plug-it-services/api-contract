@@ -1,0 +1,5 @@
+name: EventTrigger
+title: EventTrigger
+summary: Event that is fired by event checkers services
+payload:
+  $ref: "../types/events/EventTrigger.yml"

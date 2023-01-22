@@ -9,7 +9,7 @@ servers:
     description: Prod environement
 
 paths:
-  /service:
+  /services:
     get:
       summary: List services
       description: Get the list of all the available services (connected or not)
@@ -21,7 +21,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './types/services/ServicesList.openapi.yml'
+                $ref: './types/services/ServicePreviewList.openapi.yml'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
@@ -118,8 +118,6 @@ paths:
                 $ref: './types/events/EventsList.openapi.yml'
         '401':
           $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -380,7 +378,7 @@ paths:
           $ref: '#/components/responses/InternalError'
 
   
-  /plugs/{plugId}/status:
+  /plugs/{plugId}/enabled:
     put:
       summary: Enable or disable a plug
       description: Change the status of a plug

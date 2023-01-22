@@ -1,0 +1,8 @@
+type: object
+properties:
+  key:
+    type: string
+    example: recipient
+  value:
+    type: string
+    example: titi@toto.com

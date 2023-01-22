@@ -1,0 +1,5 @@
+name: ActionTrigger
+title: ActionTrigger
+summary: Event that is fired by the plug service to start an action in the consumer microservice
+payload:
+  $ref: "../types/actions/ActionTrigger.yml"

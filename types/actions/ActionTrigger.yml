@@ -1,0 +1,8 @@
+type: object
+properties:
+  id:
+    $ref: './ActionId.openapi.yml'
+  fields:
+    type: array
+    items:
+      $ref: '../fields/FieldSubmit.openapi.yml'

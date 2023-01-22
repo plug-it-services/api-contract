@@ -8,6 +8,8 @@ properties:
   activated:
     type: boolean
   event:
-    $ref: '../events/Event.openapi.yml'
+    $ref: './Step.openapi.yml'
   actions:
-    $ref: '../actions/ActionsList.openapi.yml'
+    type: array
+    items:
+      $ref: './Step.openapi.yml'

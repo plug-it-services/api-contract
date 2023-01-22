@@ -7,3 +7,5 @@ properties:
   displayName:
     type: string
     example: Mail recipient
+  required:
+    type: boolean

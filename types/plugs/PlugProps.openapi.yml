@@ -3,20 +3,11 @@ properties:
   name:
     type: string
     example: "Send email when received discord DM"
-  activated:
+  enabled:
     type: boolean
   event:
-    type: object
-    properties:
-      serviceId:
-        $ref: '../services/ServiceId.openapi.yml'
-      eventId:
-        $ref: '../events/EventId.openapi.yml'
-      fields:
-        type: array
-        items:
-          $ref: '../fields/FieldsSubmit.openapi.yml'
+    $ref: './Step.openapi.yml'
   actions:
     type: array
     items:
-      $ref: '../fields/FieldSubmit.openapi.yml'
+      $ref: './Step.openapi.yml'

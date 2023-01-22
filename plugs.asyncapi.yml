@@ -1,0 +1,27 @@
+asyncapi: '2.5.0'
+info:
+  title: Streetlights Kafka API
+  version: '1.0.0'
+  description: Description of messages that the plug service exchange with rabbitmq
+
+defaultContentType: application/json
+channels:
+  plugs_events:
+    subscribe:
+      message:
+        $ref: './messages/EventTrigger.asyncapi.yml'
+  plug_actions_{serviceId}_triggers:
+    parameters:
+      serviceId:
+        schema:
+          type: string
+          example: jd5sf2ghrze9hxc2fg7
+    publish:
+      message:
+        $ref: './messages/ActionTrigger.asyncapi.yml'
+  plug_action_finished:
+    subscribe:
+      message:
+        $ref: './messages/ActionFinished.asyncapi.yml'
+    
+
