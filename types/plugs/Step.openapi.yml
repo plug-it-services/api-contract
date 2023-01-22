@@ -1,0 +1,10 @@
+type: object
+properties:
+  serviceName:
+    $ref: '../services/ServiceId.openapi.yml'
+  id:
+    $ref: '../events/EventId.openapi.yml'
+  fields:
+    type: array
+    items:
+      $ref: '../fields/FieldSubmit.openapi.yml'

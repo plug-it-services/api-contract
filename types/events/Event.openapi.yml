@@ -11,4 +11,4 @@ properties:
   variables:
     $ref: '../variables/VariablesList.openapi.yml'
   fields:
-    $ref: '../FieldDescriptionList.openapi.yml'
+    $ref: '../fields/FieldsDescriptionList.openapi.yml'

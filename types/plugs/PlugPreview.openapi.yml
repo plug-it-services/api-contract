@@ -11,5 +11,5 @@ properties:
       schema:
         type: string
         example: '/images/icon_reddit.png'
-  activated:
+  enabled:
     type: boolean
