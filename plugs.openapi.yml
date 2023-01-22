@@ -28,6 +28,8 @@ paths:
             application/json:
               schema:
                 $ref: './types/SuccessResponse.openapi.yml'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
         '500':
           $ref: '#/components/responses/InternalError'
   
@@ -55,6 +57,8 @@ paths:
             application/json:
               schema:
                 $ref: './types/SuccessResponse.openapi.yml'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
         '500':
           $ref: '#/components/responses/InternalError'
 
@@ -82,6 +86,8 @@ paths:
             application/json:
               schema:
                 $ref: './types/SuccessResponse.openapi.yml'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
         '500':
           $ref: '#/components/responses/InternalError'
         
@@ -194,10 +200,12 @@ paths:
             application/json:
               schema:
                 $ref: './types/SuccessResponse.openapi.yml'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
         '500':
           $ref: '#/components/responses/InternalError'
 
-  /public/plugs/{id}:
+  /public/plugs/{plugId}:
     get:
       summary: Get details of a plug
       tags:
@@ -209,7 +217,7 @@ paths:
           schema:
             $ref: './types/UserHeader.openapi.yml'
         - in: path
-          name: id
+          name: plugId
           required: true
           schema:
             type: string
@@ -222,6 +230,8 @@ paths:
                 $ref: './types/plugs/Plug.openapi.yml'
         '403':
           $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalError'
     
@@ -236,7 +246,7 @@ paths:
           schema:
             $ref: './types/UserHeader.openapi.yml'
         - in: path
-          name: id
+          name: plugId
           required: true
           schema:
             type: string
@@ -249,6 +259,8 @@ paths:
                 $ref: './types/SuccessResponse.openapi.yml'
         '403':
           $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalError'
     put:
@@ -261,6 +273,11 @@ paths:
           required: true
           schema:
             $ref: './types/UserHeader.openapi.yml'
+        - in: path
+          name: plugId
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -275,10 +292,12 @@ paths:
                 $ref: './types/SuccessResponse.openapi.yml'
         '403':
           $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalError'
 
-  /public/plugs/{id}/enabled:
+  /public/plugs/{plugId}/enabled:
     put:
       summary: Update a plug
       tags:
@@ -289,6 +308,11 @@ paths:
           required: true
           schema:
             $ref: './types/UserHeader.openapi.yml'
+        - in: path
+          name: plugId
+          required: true
+          schema:
+            type: string
         - in: query
           name: enabled
           required: true
@@ -303,6 +327,8 @@ paths:
                 $ref: './types/SuccessResponse.openapi.yml'
         '403':
           $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalError'
 
