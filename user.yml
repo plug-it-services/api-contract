@@ -13,6 +13,10 @@ paths:
         '200':
           description: Successfull verify
           content:
+            headers:
+              schema:
+                type: string
+                example: user={"email":"wow@gmail.com","firstName":"wow","lastName":"wow","id":"5f9f9f9f9f9f9f9f9f9f9f9f"}
             application/json:
               schema:
                 type: object
@@ -25,36 +29,16 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 
-  /auth/revoke:
-    get:
-      summary: Revoke JWT
-      description: Revoke the validity of the JWT
-      tags:
-        - "Authentication"
-      responses:
-        '200':
-          description: Successfull verify
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: success
-        '500':
-          $ref: '#/components/responses/InternalError'
-
 components:
   responses:
     Unauthorized:
-      description: Invalid JWT token or JWT token not found
+      description: Invalid JWT token or CSRF token
       content:
         application/json:
           schema:
             $ref: './types/ErrorResponse.openapi.yml'
           example:
-            message: Invalid JWT token provided
+            message: Unauthorized
 
     InternalError:
         description: Invalid token or token not found

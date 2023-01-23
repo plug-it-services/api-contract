@@ -443,7 +443,6 @@ paths:
       tags:
         - "Authentication"
       security: []
-      
       requestBody:
         content:
           application/json:
@@ -460,6 +459,87 @@ paths:
               schema: 
                 type: string
                 example: access_token=abcde12345
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /auth/logout:
+    post:
+      summary: Logout the user
+      description: Logout and clear cookies of the current user + delete crsf
+      tags:
+        - "Authentication"
+      responses:
+        '200':
+          description: Successfull logout
+          content:
+            application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: success
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /auth:
+    put:
+      summary: Update user informations
+      description: Update the informations of the current user
+      tags:
+        - "Authentication"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './types/auth/SignUp.openapi.yml'
+            example:
+              firstName: titi
+              lastName: toto
+              email: titi@toto.com
+              password: azerty1234
+      responses:
+        '201':
+          description: Successfull update user
+          content:
+            application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: success
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+    delete:
+      summary: Delete the current user
+      description: Delete the current user from the database
+      tags:
+        - "Authentication"
+      responses:
+        '200':
+          description: Successfull delete
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: success
         '400':
           $ref: '#/components/responses/InvalidRequest'
         '401':
