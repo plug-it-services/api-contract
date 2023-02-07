@@ -28,7 +28,7 @@ paths:
           $ref: '#/components/responses/InternalError'
 
   /service/{serviceName}/oauth2:
-    get:
+    post:
       summary: Start the oauth2 process for the requested serviceName
       description: Url to load with the browser to start the oauth2 process. This endpoint will redirect you to the access provider for login
       tags:
@@ -39,9 +39,18 @@ paths:
           required: true
           schema:
             type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './types/services/Oauth2InitRequest.yml'
       responses:
-        '302':
-          description: Redirect to service provider login page
+        '200':
+          description: Url to redirect the frontend to get the access code
+          content:
+            application/json:
+              schema:
+                $ref: './types/services/Oauth2InitResponse.yml'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -424,8 +433,8 @@ paths:
             schema:
               $ref: './types/auth/SignUp.openapi.yml'
             example:
-              firstName: titi
-              lastName: toto
+              firstname: titi
+              lastname: toto
               email: titi@toto.com
               password: azerty1234
       responses:
@@ -611,7 +620,7 @@ components:
             message: Cannot delete ressources that you don't own
     
     InternalError:
-      description: Invalid token or token not found
+      description: Internal server error
       content:
         application/json:
           schema:

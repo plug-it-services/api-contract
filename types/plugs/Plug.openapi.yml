@@ -2,6 +2,9 @@ type: object
 properties:
   id:
     $ref: './PlugId.openapi.yml'
+  owner:
+    type: number
+    example: 2
   name:
     type: string
     example: "Send email when received discord DM"

@@ -1,0 +1,6 @@
+type: object
+properties:
+  redirectUrl:
+    type: string
+    format: url
+    example: https://area-dev.alexandrejublot.com

@@ -1,0 +1,6 @@
+type: object
+properties:
+  url:
+    type: string
+    format: url
+    example: https://twitter.com/i/oauth2/authorize?response_type=code&client_id=U3F4SHo5NlZVTXZPODlObGJPNEM6MTpjaQ&redirect_uri=https%3A%2F%2Fapi-area-dev.alexandrejublot.com%2Fservice%2Ftwitter%2Fcallback&scope=tweet.read+tweet.write+users.read+offline.access&state=ef748464-1891-4f12-a849-acd82e3da178&code_challenge=z_hf5kmjIxgbQJ7bx__QKQivF-yIbJUlZvHvnmvf228&code_challenge_method=s256
