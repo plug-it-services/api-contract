@@ -3,9 +3,9 @@ info:
   title: Plug-it API
   version: '1.0.0'
 servers:
-  - url: https://api.dev.area.alexandrejublot.com/api/v1.0
+  - url: https://api-area-dev.alexandrejublot.com/
     description: Dev environement
-  - url: https://api.area.alexandrejublot.com/api/v1.0
+  - url: https://apiarea.alexandrejublot.com/
     description: Prod environement
 
 paths:
