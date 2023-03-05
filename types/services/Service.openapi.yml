@@ -1,0 +1,17 @@
+type: object
+properties:
+  id:
+    $ref: './ServiceId.openapi.yml'
+  name:
+    type: string
+    example: GMail
+  connected:
+    type: boolean
+  icon:
+    type: string
+    example: '/images/reddit_icon.png'
+    description: URI to the icon image
+  events:
+    $ref: '../events/EventsList.openapi.yml'
+  actions:
+    $ref: '../actions/ActionsList.openapi.yml'

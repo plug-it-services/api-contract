@@ -1,0 +1,64 @@
+openapi: '3.0.2'
+info:
+  title: User Service
+  version: '1.0'
+paths:
+  /auth/verify:
+    get:
+      summary: Verify JWT
+      description: Verify if JWT is valid
+      tags:
+        - "Authentication"
+      responses:
+        '200':
+          description: Successfull verify
+          content:
+            headers:
+              schema:
+                type: string
+                example: user={"email":"wow@gmail.com","firstName":"wow","lastName":"wow","id":"5f9f9f9f9f9f9f9f9f9f9f9f"}
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: success
+        '400':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+components:
+  responses:
+    Unauthorized:
+      description: Invalid JWT token or CSRF token
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Unauthorized
+
+    InternalError:
+        description: Invalid token or token not found
+        content:
+          application/json:
+            schema:
+              $ref: './types/ErrorResponse.openapi.yml'
+            example:
+              message: Internal server error occurred
+
+  securitySchemes:
+    jwt:
+      type: apiKey
+      in: cookie
+      name: access_token
+    sessionToken:
+      type: apiKey
+      in: header
+      name: crsf_token
+
+security:
+  - jwt: []
+  - sessionToken: []

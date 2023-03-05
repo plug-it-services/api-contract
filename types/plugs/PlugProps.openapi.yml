@@ -1,0 +1,13 @@
+type: object
+properties:
+  name:
+    type: string
+    example: "Send email when received discord DM"
+  enabled:
+    type: boolean
+  event:
+    $ref: './Step.openapi.yml'
+  actions:
+    type: array
+    items:
+      $ref: './Step.openapi.yml'

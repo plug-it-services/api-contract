@@ -1,0 +1,18 @@
+type: object
+properties:
+  name:
+    type: string
+    example: Onedrive
+  authType:
+    type: string
+    enum:
+      - none
+      - oauth2
+      - apiKey
+      - clientSecret
+  connected:
+    type: boolean
+    example: false
+  icon:
+    type: string
+    example: "/images/onedrive_icon.png"

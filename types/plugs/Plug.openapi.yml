@@ -1,0 +1,18 @@
+type: object
+properties:
+  id:
+    $ref: './PlugId.openapi.yml'
+  owner:
+    type: number
+    example: 2
+  name:
+    type: string
+    example: "Send email when received discord DM"
+  activated:
+    type: boolean
+  event:
+    $ref: './Step.openapi.yml'
+  actions:
+    type: array
+    items:
+      $ref: './Step.openapi.yml'

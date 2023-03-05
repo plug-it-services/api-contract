@@ -1,0 +1,383 @@
+openapi: '3.0.2'
+info:
+  title: Plugs Service
+  version: '1.0.0'
+
+paths:
+  /service/{serviceName}/initialize:
+    post:
+      summary: Register an starting up micro service
+      description: Register the service and save events and actions
+      tags:
+        - "Services"
+      parameters:
+        - in: path
+          name: serviceName
+          required: true
+          schema: 
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './types/services/InitializeRequest.openapi.yml'
+      responses:
+        '200':
+          description: Saved or updated service
+          content:
+            application/json:
+              schema:
+                $ref: './types/SuccessResponse.openapi.yml'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  
+  /service/{serviceName}/loggedIn:
+    post:
+      summary: Register the user connection to a service
+      description: Create an entry or update existing one in database to save the connected status of a user for a specific service
+      tags:
+        - "Services"
+      parameters:
+        - in: path
+          name: serviceName
+          required: true
+          schema: 
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './types/UserId.openapi.yml'
+      responses:
+        '200':
+          description: Saved or updated connection
+          content:
+            application/json:
+              schema:
+                $ref: './types/SuccessResponse.openapi.yml'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /service/{serviceName}/loggedOut:
+    post:
+      summary: Register the user logout to a service
+      description: Create an entry or update existing one in database to save the disconnected status of a user for a specific service
+      tags:
+        - "Services"
+      parameters:
+        - in: path
+          name: serviceName
+          required: true
+          schema: 
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './types/UserId.openapi.yml'
+      responses:
+        '200':
+          description: Saved or updated connection
+          content:
+            application/json:
+              schema:
+                $ref: './types/SuccessResponse.openapi.yml'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        
+    
+  /public/services:
+    get:
+      summary: List all the services 
+      description: List all the services with the connection status of the user
+      tags:
+        - "Services"
+      parameters:
+        - in: header
+          name: user
+          required: true
+          schema:
+            $ref: './types/UserHeader.openapi.yml'
+      responses:
+        '200':
+          description: List of services
+          content:
+            application/json:
+              schema:
+                $ref: './types/services/ServicePreviewList.openapi.yml'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /public/service/{serviceName}/events:
+    get:
+      summary: List all events of a Service
+      tags:
+        - "Services"
+      parameters:
+        - in: path
+          name: serviceName
+          required: true
+          schema: 
+            type: string
+      responses:
+        '200':
+          description: List of events
+          content:
+            application/json:
+              schema:
+                $ref: './types/events/EventsList.openapi.yml'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /public/service/{serviceName}/actions:
+    get:
+      summary: List all actions of a Service
+      tags:
+        - "Services"
+      parameters:
+        - in: path
+          name: serviceName
+          required: true
+          schema: 
+            type: string
+      responses:
+        '200':
+          description: List of actions
+          content:
+            application/json:
+              schema:
+                $ref: './types/actions/ActionsList.openapi.yml'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+
+  /public/plugs:
+    get:
+      summary: List all the plugs an user has
+      tags:
+        - "Plugs"
+      parameters:
+        - in: header
+          name: user
+          required: true
+          schema:
+            $ref: './types/UserHeader.openapi.yml'
+      responses:
+        '200':
+          description: List of all user's plugs
+          content:
+            application/json:
+              schema:
+                $ref: './types/plugs/PlugPreviewsList.openapi.yml'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+    post:
+      summary: Create a new plug
+      tags:
+        - "Plugs"
+      parameters:
+        - in: header
+          name: user
+          required: true
+          schema:
+            $ref: './types/UserHeader.openapi.yml'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './types/plugs/PlugProps.openapi.yml'
+      responses:
+        '201':
+          description: Plug created
+          content:
+            application/json:
+              schema:
+                $ref: './types/SuccessResponse.openapi.yml'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /public/plugs/{plugId}:
+    get:
+      summary: Get details of a plug
+      tags:
+        - "Plugs"
+      parameters:
+        - in: header
+          name: user
+          required: true
+          schema:
+            $ref: './types/UserHeader.openapi.yml'
+        - in: path
+          name: plugId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Plug details
+          content:
+            application/json:
+              schema:
+                $ref: './types/plugs/Plug.openapi.yml'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    
+    delete:
+      summary: Delete a plug
+      tags:
+        - "Plugs"
+      parameters:
+        - in: header
+          name: user
+          required: true
+          schema:
+            $ref: './types/UserHeader.openapi.yml'
+        - in: path
+          name: plugId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deleted plug
+          content:
+            application/json:
+              schema:
+                $ref: './types/SuccessResponse.openapi.yml'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    put:
+      summary: Update a plug
+      tags:
+        - "Plugs"
+      parameters:
+        - in: header
+          name: user
+          required: true
+          schema:
+            $ref: './types/UserHeader.openapi.yml'
+        - in: path
+          name: plugId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './types/plugs/PlugProps.openapi.yml'
+      responses:
+        '200':
+          description: Plug updated
+          content:
+            application/json:
+              schema:
+                $ref: './types/SuccessResponse.openapi.yml'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /public/plugs/{plugId}/enabled:
+    put:
+      summary: Update a plug
+      tags:
+        - "Plugs"
+      parameters:
+        - in: header
+          name: user
+          required: true
+          schema:
+            $ref: './types/UserHeader.openapi.yml'
+        - in: path
+          name: plugId
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: enabled
+          required: true
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Plug updated
+          content:
+            application/json:
+              schema:
+                $ref: './types/SuccessResponse.openapi.yml'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+
+components:
+  responses:
+    Unauthorized:
+      description: Invalid JWT token or JWT token not found
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Invalid JWT token provided
+
+    InvalidRequest:
+      description: Invalid body/parameters for the request
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Missing required field XXXXX 
+
+    Forbidden:
+      description: Forbidden action with your actual permissions
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Cannot delete ressources that you don't own
+    
+    InternalError:
+      description: Invalid token or token not found
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Internal server error occurred
+
+    NotFound:
+      description: Ressource not found
+      content:
+        application/json:
+          schema:
+            $ref: './types/ErrorResponse.openapi.yml'
+          example:
+            message: Service not found
+
+    

@@ -1,0 +1,17 @@
+type: object
+properties:
+  name:
+    type: string
+    example: Onedrive
+  authType:
+    type: string
+    enum:
+      - oauth2
+      - clientSecret
+      - apiKey
+      - none
+    example: oauth2
+  events:
+    $ref: '../events/EventsList.openapi.yml'
+  actions:
+    $ref: '../actions/ActionsList.openapi.yml'

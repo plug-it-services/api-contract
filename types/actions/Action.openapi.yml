@@ -1,0 +1,14 @@
+type: object
+properties:
+  id:
+    $ref: './ActionId.openapi.yml'
+  name:
+    type: string
+    example: Send email
+  description:
+    type: string
+    example: Send email to a recipient
+  variables:
+    $ref: '../variables/VariablesList.openapi.yml'
+  fields:
+    $ref: '../fields/FieldsDescriptionList.openapi.yml'

@@ -1,0 +1,7 @@
+type: object
+properties:
+  key:
+    $ref: './FieldKey.openapi.yml'
+  value:
+    type: string
+    example: test

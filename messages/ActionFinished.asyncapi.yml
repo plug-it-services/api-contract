@@ -1,0 +1,5 @@
+name: ActionFinished
+title: ActionFinished
+summary: Event that is fired by microservices once their action is over
+payload:
+  $ref: "../types/actions/ActionFinished.yml"

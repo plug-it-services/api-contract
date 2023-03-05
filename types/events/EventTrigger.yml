@@ -1,0 +1,13 @@
+type: object
+properties:
+  serviceId:
+    type: string
+    example: kkdsejukj6d7zb86784tr
+  eventId:
+    type: string
+    example: mailArrived
+  variables:
+    type: array
+    items:
+      $ref: '../variables/VariableSubmit.yml'
+description: Action id in the service

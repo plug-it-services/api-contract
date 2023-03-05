@@ -1,0 +1,14 @@
+type: object
+properties:
+  id:
+    $ref: './EventId.openapi.yml'
+  name:
+    type: string
+    example: Email is received
+  description:
+    type: string
+    example: Trigger when a mail is received
+  variables:
+    $ref: '../variables/VariablesList.openapi.yml'
+  fields:
+    $ref: '../fields/FieldsDescriptionList.openapi.yml'
